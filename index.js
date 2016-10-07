@@ -1,12 +1,15 @@
-export default class MyComponent extends React.Component {
-  static classArrow = () => 'I m an arrow function on the class';
-  instanceArrow = () => 'I m an arrow function on the instance';
+import {AppContainer} from 'react-hot-loader'
+import React from 'react'
+import {render} from 'react-dom'
+import App from './app'
 
-  static oldschool = function() {
-    return 'I am oldschool'
-  };
+const mountPoint = document.getElementById('app')
 
-  render(){
-    return null
-  }
+render(<AppContainer><App/></AppContainer>, mountPoint)
+
+if (module.hot) {
+  module.hot.accept('./app', () => {
+    const NewApp = require('./app').default
+    render(<AppContainer><NewApp/></AppContainer>, mountPoint)
+  })
 }

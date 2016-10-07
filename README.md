@@ -1,34 +1,15 @@
-# React Hot Loader 3.0 static class method bug
+# React Hot Loader 3.0 bug showcase: arrow functions as class properties
 
 ```
 npm install
-$(npm bin)/babel index.js
+$(npm bin)/webpack-dev-server
 ```
 
-Output:
+- Open http://localhost:8080.
+- Open web console
+- Click the button in the app
 
-```
-  ...
-  _createClass(MyComponent, [{
-    key: '__classArrow__REACT_HOT_LOADER__',
-    value: function __classArrow__REACT_HOT_LOADER__() {
-      return 'I m an arrow function on the class';
-    }
-  }, {
-    key: '__instanceArrow__REACT_HOT_LOADER__',
-    value: function __instanceArrow__REACT_HOT_LOADER__() {
-      return 'I m an arrow function on the instance';
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return null;
-    }
-  }]);
-  ...
-```
+React will complain that you're trying to call `setState` on an
+unmounted component.
 
-It seems as if babel doesn't realize that the arrow function is defined
-on the class, not on the prototype
-
-
+The problem disappears when adding the `es2015` preset to `.babelrc`
